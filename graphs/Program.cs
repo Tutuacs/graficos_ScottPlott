@@ -30,22 +30,7 @@ GraphService graphService = new();
 app.MapGet("/graph1", () =>
 {
     byte[] imageBytes = graphService.Graph1();
-
-    using MemoryStream pdfStream = new();
-    PdfWriter writer = new(pdfStream);
-    PdfDocument pdf = new(writer);
-    iText.Layout.Document document = new(pdf);
-
-    // Adicionando a imagem ao documento PDF
-    ImageData imageData = ImageDataFactory.Create(imageBytes);
-    Image image = new(imageData);
-    document.Add(image);
-
-    // Fechando o documento PDF
-    document.Close();
-
-    return Results.Content(Convert.ToBase64String(pdfStream.ToArray()));
-
+    return Results.Content(Convert.ToBase64String(imageBytes.ToArray()));
 });
 
 app.MapGet("/graph2", () =>
